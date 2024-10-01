@@ -1,0 +1,55 @@
+/* Style for the top taskbar */
+.taskbar {
+  background-color: #333;
+  padding: 10px 0;
+}
+
+.taskbar-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.taskbar-item {
+  color: white;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.taskbar-item a {
+  color: white;
+  text-decoration: none;
+}
+
+.taskbar-item:hover {
+  text-decoration: underline;
+}
+
+/* Main content styles */
+.container {
+  margin: 20px;
+}
+
+h1, h2, p {
+  font-family: Arial, sans-serif;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+input {
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
