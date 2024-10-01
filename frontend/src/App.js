@@ -1,7 +1,55 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes
+} from "react-router-dom";
+import './App.css'; // Add this to style your components, especially the taskbar
 
 function App() {
+  return (
+    <Router>
+      <div>
+        {/* Top Taskbar */}
+        <nav className="taskbar">
+          <ul className="taskbar-list">
+            <li className="taskbar-item">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="taskbar-item">
+              <Link to="/opportunities">Opportunities</Link>
+            </li>
+            <li className="taskbar-item">
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Define Routes */}
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/opportunities" element={<Opportunities />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+// Home Page Component
+function Home() {
+  return (
+    <div className="container">
+      <h1>Welcome to the Volunteer Portal</h1>
+      <p>This is the home page. Navigate to see opportunities or contact us.</p>
+    </div>
+  );
+}
+
+// Opportunities Page Component
+function Opportunities() {
   const [opportunities, setOpportunities] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [name, setName] = useState("");
@@ -26,7 +74,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Volunteer Opportunities</h1>
       <ul>
         {opportunities.map((opportunity) => (
@@ -57,6 +105,16 @@ function App() {
           </button>
         </div>
       )}
+    </div>
+  );
+}
+
+// Contact Page Component
+function Contact() {
+  return (
+    <div className="container">
+      <h1>Contact Us</h1>
+      <p>You can reach us at: volunteer@example.com</p>
     </div>
   );
 }
