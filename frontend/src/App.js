@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes
-} from "react-router-dom";
-import './App.css'; // Add this to style your components, especially the taskbar
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import "./App.css"; // Add this to style your components, especially the taskbar
 
 function App() {
   return (
@@ -53,6 +48,7 @@ function Opportunities() {
   const [opportunities, setOpportunities] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   // Fetch opportunities from backend
   useEffect(() => {
@@ -66,11 +62,18 @@ function Opportunities() {
     axios
       .post("http://127.0.0.1:5000/apply", {
         name,
+        email,
         volunteer_id: opportunityId,
         title: selectedOpportunity.title,
       })
       .then((response) => alert(response.data.message))
-      .catch((error) => console.error("Error applying:", error));
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          alert(`Error: ${error.response.data.error}`); // error message from Flask
+        } else {
+          console.error("Unknown error", error);
+        }
+      });
   };
 
   return (
@@ -99,6 +102,13 @@ function Opportunities() {
             placeholder="Your Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+          <br />
+          <input
+            type="text"
+            placeholder="Your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <button onClick={() => applyForOpportunity(selectedOpportunity.id)}>
             Submit
