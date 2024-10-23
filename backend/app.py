@@ -72,7 +72,7 @@ def get_opportunity(volunteer_id):
     return jsonify(opportunity.to_dict())
 
 def is_valid_email(email):
-    # email validation
+    # email validation 
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
 # API route to submit an application
