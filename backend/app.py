@@ -30,11 +30,22 @@ class Opportunity(db.Model):
         
 def add_dummy_data():
     dummy_data = [
-        {"title": "Beach Cleanup", "description": "Help clean up the local beach.", "location": "Miami, FL"},
-        {"title": "Soup Kitchen Helper", "description": "Serve meals to those in need.", "location": "New York, NY"},
-        {"title": "Tree Planting", "description": "Join us in planting trees in the community park.", "location": "Seattle, WA"},
-        {"title": "Park Cleanup", "description": "Description for the park cleanup.", "location": "Los Angeles, CA"}
-    ]
+    {"title": "Beach Cleanup", "description": "Help clean up the local beach.", "location": "Miami, FL"},
+    {"title": "Soup Kitchen Helper", "description": "Serve meals to those in need.", "location": "New York, NY"},
+    {"title": "Tree Planting", "description": "Join us in planting trees in the community park.", "location": "Seattle, WA"},
+    {"title": "Park Cleanup", "description": "Description for the park cleanup.", "location": "Los Angeles, CA"},
+    {"title": "Animal Shelter Volunteer", "description": "Care for animals and assist with adoption events.", "location": "Denver, CO"},
+    {"title": "Tutoring Program", "description": "Help kids improve their math and reading skills.", "location": "Chicago, IL"},
+    {"title": "Hospital Volunteer", "description": "Provide support to hospital staff and comfort to patients.", "location": "Boston, MA"},
+    {"title": "Food Bank Assistant", "description": "Sort and pack food items for distribution.", "location": "Austin, TX"},
+    {"title": "Community Garden Project", "description": "Help grow vegetables and teach gardening skills.", "location": "Portland, OR"},
+    {"title": "Recycling Drive Coordinator", "description": "Organize and run a recycling event.", "location": "Phoenix, AZ"},
+    {"title": "Senior Center Companion", "description": "Spend time with seniors and assist with activities.", "location": "Atlanta, GA"},
+    {"title": "Disaster Relief Volunteer", "description": "Support emergency response efforts during disasters.", "location": "New Orleans, LA"},
+    {"title": "Cultural Festival Organizer", "description": "Assist with organizing and running a cultural festival.", "location": "San Francisco, CA"},
+    {"title": "Library Helper", "description": "Sort books and assist visitors at the local library.", "location": "Columbus, OH"},
+    {"title": "Clothing Drive Volunteer", "description": "Collect, sort, and distribute clothing to those in need.", "location": "Charlotte, NC"}
+]
 
     for data in dummy_data:
         opportunity = Opportunity(
@@ -134,6 +145,6 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         
-        if not Opportunity.query.first():
-            add_dummy_data()
+        # if not Opportunity.query.first(): 
+        add_dummy_data()
     app.run(debug=True)

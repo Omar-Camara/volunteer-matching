@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import Modal from "./components/Modal";
 import "./App.css"; // Add this to style your components, especially the taskbar
 import LoginForm from "./Login/LoginForm";
+import OpportunityCard from "./components/OpportunityCard";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
@@ -42,9 +43,14 @@ function App() {
 // Home Page Component
 function Home() {
   return (
-    <div className="container">
+    <div className="container text-center mt-5">
       <h1>Welcome to the Volunteer Portal</h1>
-      <p>This is the home page. Navigate to see opportunities or contact us.</p>
+      <p>
+        Discover meaningful volunteer opportunities and make a difference today!
+      </p>
+      <Link to="/opportunities">
+        <button className="btn btn-primary">Explore Opportunities</button>
+      </Link>
     </div>
   );
 }
@@ -66,9 +72,10 @@ function Opportunities() {
       .then((response) => {
         setOpportunities(response.data);
       })
-      .catch((error) => console.error("Error fetching opportunities:", error));
+      .catch((error) => {
+        console.error("There was an error fetching the opportunities!", error);
+      });
   }, []);
-
   const applyForOpportunity = (opportunityId) => {
     axios
       .post("http://127.0.0.1:5000/apply", {
@@ -95,56 +102,146 @@ function Opportunities() {
   };
 
   return (
-    <div className="container">
-      <h1>Volunteer Opportunities</h1>
-      <ul>
+    <div className="container mt-5">
+      <h1>Available Opportunities</h1>
+      <div className="row">
         {opportunities.map((opportunity) => (
-          <li key={opportunity.id}>
-            <h2>{opportunity.title}</h2>
-            <p>{opportunity.description}</p>
-            <p>
-              <strong>Location:</strong> {opportunity.location}
-            </p>
-            <button onClick={() => openApplyModal(opportunity)}>Apply</button>
-          </li>
+          <OpportunityCard key={opportunity.id} opportunity={opportunity} />
         ))}
-      </ul>
-
-      <Modal isOpen={showApplyModal} onClose={() => setShowApplyModal(false)}>
-        <h3>Apply for: {selectedOpportunity?.title}</h3>
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Your Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button onClick={() => applyForOpportunity(selectedOpportunity.id)}>
-          Submit
-        </button>
-      </Modal>
-      <Modal
-        isOpen={showMessageModal}
-        onClose={() => setShowMessageModal(false)}
-      >
-        <p>{modalMessage}</p>
-      </Modal>
+      </div>
     </div>
   );
 }
 
-// Contact Page Component
+// Contact Page
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  // Submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:5000/contact",
+        formData
+      );
+      setResponseMessage("Your message has been sent successfully.");
+      setIsSubmitting(false);
+    } catch (error) {
+      setResponseMessage("There was an error sending your message.");
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="container">
+    <div className="container mt-5">
       <h1>Contact Us</h1>
-      <p>You can reach us at: volunteer@example.com</p>
+      <div className="row">
+        <div className="col-md-6">
+          <h3>Contact Form</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="message" className="form-label">
+                Message
+              </label>
+              <textarea
+                className="form-control"
+                id="message"
+                name="message"
+                rows="4"
+                value={formData.message}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send Message"}
+            </button>
+          </form>
+          {responseMessage && <p className="mt-3">{responseMessage}</p>}
+        </div>
+
+        {/* Contact info */}
+        <div className="col-md-6">
+          <h3>Get In Touch</h3>
+          <p>
+            Feel free to reach out to us for any questions or feedback. You can
+            also follow us on our social media platforms.
+          </p>
+          <ul>
+            <li>Email: volunteer@example.com</li>
+            <li>Phone: +123 456 7890</li>
+            <li>Address: 123 Volunteer St, City, Country</li>
+            <li>
+              Follow us on:
+              <ul>
+                <li>
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Twitter
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Facebook
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
