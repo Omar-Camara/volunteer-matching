@@ -5,6 +5,7 @@ import "./App.css"; // Add this to style your components, especially the taskbar
 import LoginForm from "./Login/LoginForm";
 import OpportunityCard from "./components/OpportunityCard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Search from './components/Search';
 
 function App() {
   return (
@@ -64,6 +65,8 @@ function Opportunities() {
   const [showApplyModal, setShowApplyModal] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [filteredOpportunities, setFilteredOpportunities] = useState([]);
+
 
   // Fetch opportunities from backend
   useEffect(() => {
@@ -71,6 +74,7 @@ function Opportunities() {
       .get("http://127.0.0.1:5000/opportunities")
       .then((response) => {
         setOpportunities(response.data);
+        setFilteredOpportunities(response.data); // Initialize with all opportunities
       })
       .catch((error) => {
         console.error("There was an error fetching the opportunities!", error);
@@ -101,11 +105,26 @@ function Opportunities() {
     setShowApplyModal(true);
   };
 
+ // Search handler
+ const handleSearch = ({ title, location }) => {
+  const lowercasedTitle = title.toLowerCase();
+  const lowercasedLocation = location.toLowerCase();
+
+  const filtered = opportunities.filter((opportunity) =>
+    (opportunity.title.toLowerCase().includes(lowercasedTitle) || !title) &&
+    (opportunity.location.toLowerCase().includes(lowercasedLocation) || !location)
+  );
+
+  setFilteredOpportunities(filtered); // Update filtered opportunities
+};
+  
+
   return (
     <div className="container mt-5">
       <h1>Available Opportunities</h1>
+      <Search onSearch={handleSearch} /> {/* Search component */}
       <div className="row">
-        {opportunities.map((opportunity) => (
+        {filteredOpportunities.map((opportunity) => (
           <OpportunityCard key={opportunity.id} opportunity={opportunity} />
         ))}
       </div>
