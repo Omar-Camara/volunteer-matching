@@ -4,6 +4,7 @@ from flask_mail import Mail, Message
 from flask_cors import CORS
 import re
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -102,6 +103,18 @@ def apply_for_opportunity():
         return jsonify({"error": "A valid email is required"}), 400
     
     return jsonify({"message": f"You applied for {title}!"})
+
+@app.route('/search', methods=['GET'])
+def search_opportunities():
+    query = request.args.get('query', '').lower()
+    results = [
+        opp for opp in volunteer_opportunities
+        if query in opp['name'].lower() or query in opp['description'].lower()
+    ]
+    return jsonify(results)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 @app.route('/opportunities', methods=['POST'])
 def create_opportunity():
