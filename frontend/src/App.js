@@ -13,6 +13,7 @@ function App() {
       <div>
         {/* Top Taskbar */}
         <nav className="taskbar">
+          <div className="Logo"><img src="Logo.png" height="30"/></div>
           <ul className="taskbar-list">
             <li className="taskbar-item">
               <Link to="/">Home</Link>
