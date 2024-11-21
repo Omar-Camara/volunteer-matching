@@ -161,3 +161,62 @@ if __name__ == '__main__':
         # if not Opportunity.query.first(): 
         add_dummy_data()
     app.run(debug=True)
+    
+    
+""""
+Volunteer Opportunities Management API
+This Flask application provides a backend service to manage volunteer opportunities, including creating, reading, updating, deleting (CRUD), and searching opportunities. Additionally, it supports applying for opportunities and integrating email validation.
+
+Requirements
+To run this application, ensure the following Python libraries are installed:
+
+Flask: Web framework
+Flask-SQLAlchemy: ORM for database operations
+Flask-Mail: Email service integration
+Flask-CORS: Cross-Origin Resource Sharing
+re: For regular expression operations (email validation)
+
+
+Configuration
+Database: Uses SQLite as the database, stored locally as volunteer.db.
+Mail Service: Currently initialized but not configured (no mail server settings provided).
+CORS: Enabled to allow requests from different origins.
+
+Routes
+Opportunity CRUD Operations
+Get All Opportunities
+Endpoint: /opportunities
+Method: GET
+Description: Fetches all volunteer opportunities, with optional filtering by title and location.
+Query Parameters:
+
+title (optional): Search by title (case-insensitive).
+location (optional): Search by location (case-insensitive).
+Response: JSON list of opportunities.
+Get Opportunity by ID
+Endpoint: /opportunities/<int:volunteer_id>
+Method: GET
+Description: Fetches a specific opportunity by its ID.
+Response: JSON object representing the opportunity or 404 error if not found.
+
+Create Opportunity
+Endpoint: /opportunities
+Method: POST
+Description: Adds a new volunteer opportunity.
+Request Body: JSON with title, description, and location.
+Response: JSON object of the created opportunity with status code 201.
+
+Update Opportunity
+Endpoint: /opportunities/<int:volunteer_id>
+Method: PUT
+Description: Updates an existing opportunity.
+Request Body: JSON with optional title, description, and location.
+Response: JSON object of the updated opportunity or 404 error if not found.
+
+Delete Opportunity
+Endpoint: /opportunities/<int:volunteer_id>
+Method: DELETE
+Description: Deletes a specific opportunity by ID.
+Response: Success message or 404 error if not found.
+
+"""
