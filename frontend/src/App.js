@@ -7,13 +7,13 @@ import OpportunityCard from "./components/OpportunityCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Search from './components/Search';
 
+
 function App() {
   return (
     <Router>
       <div>
         {/* Top Taskbar */}
         <nav className="taskbar">
-          <div className="Logo"><img src="Logo.png" height="30"/></div>
           <ul className="taskbar-list">
             <li className="taskbar-item">
               <Link to="/">Home</Link>
@@ -45,17 +45,34 @@ function App() {
 // Home Page Component
 function Home() {
   return (
-    <div className="container text-center mt-5">
+    <div
+      className="home-container"
+      style={{
+        backgroundImage: `url('./assets/images/65df8bbbcd606dd30519f8d8_blog_volunteers.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        color: "#fff", // Ensure text is visible over the image
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start", // Align content at the top
+        alignItems: "center",
+        paddingTop: "30px", // Add spacing from the top
+      }}
+    >
       <h1>Welcome to the Volunteer Portal</h1>
       <p>
         Discover meaningful volunteer opportunities and make a difference today!
       </p>
       <Link to="/opportunities">
-        <button className="btn btn-primary">Explore Opportunities</button>
+        <button className="btn btn-primary mt-3">Explore Opportunities</button>
       </Link>
     </div>
   );
 }
+
 
 // Opportunities Page Component
 function Opportunities() {
@@ -267,3 +284,32 @@ function Contact() {
 }
 
 export default App;
+
+/*
+Requirements
+To run this application, ensure the following dependencies are installed:
+
+react: Frontend library for building UI.
+axios: For making HTTP requests.
+react-router-dom: For routing.
+bootstrap: For styling and responsive design.
+
+Project Structure
+Key Files
+App.js: Main application file defining routes and overall layout.
+Login/LoginForm.js: Component for the login functionality.
+components/OpportunityCard.js: Component to display individual volunteer opportunities.
+components/Search.js: Component for searching opportunities.
+App.css: Contains custom styles for the application, such as the taskbar.
+Components
+App
+The main application component that sets up routing and the navigation taskbar.
+
+Taskbar: Provides navigation links for "Home," "Opportunities," "Contact," and "Login."
+Routes:
+/: Home page.
+/opportunities: Lists all volunteer opportunities.
+/contact: Contact form for user inquiries.
+/login: Login page (placeholder for LoginForm component).
+
+*/
