@@ -59,7 +59,7 @@ function Home() {
         flexDirection: "column",
         justifyContent: "flex-start", // Align content at the top
         alignItems: "center",
-        paddingTop: "30px", // Add spacing from the top
+        paddingTop: "80px", // Add spacing from the top
       }}
     >
       <h1>Welcome to the Volunteer Portal</h1>
